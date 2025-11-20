@@ -1,8 +1,8 @@
+import mercurius from 'mercurius';
+import { typeDefs, resolvers } from '../graphql';
 import fastify from 'fastify';
 import multipart from '@fastify/multipart';
 import uploadRoutes from '../modules/upload/routes';
-import mercurius from 'mercurius';
-import { typeDefs, resolvers } from '../graphql';
 import { prisma } from './database/prisma';
 
 export async function buildApp() {
@@ -14,10 +14,10 @@ export async function buildApp() {
 
   // GraphQL
   await app.register(mercurius, {
-    schema: typeDefs.join('\n'),
+    schema: typeDefs,
     resolvers,
     graphiql: true,
-    context: () => ({ prisma }),
+    context: (request) => ({ prisma, request }),
   });
 
   return app;
