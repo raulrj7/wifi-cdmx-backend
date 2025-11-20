@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "a9df9c07-518f-4d21-bebb-e336ea572f66",
+		"name": "wifi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11347857",
+		"_collection_link": "https://personal-6166.postman.co/workspace/wifi_cdmx~534e74e7-aae0-4762-9936-225aa2c3c3d1/collection/11347857-a9df9c07-518f-4d21-bebb-e336ea572f66?action=share&source=collection_link&creator=11347857"
+	},
+	"item": [
+		{
+			"name": "upload xlsx",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYyNjA0OCwiZXhwIjoxNzYzNjI5NjQ4fQ.c5hmiuL4AFl5Y_lVahyM-duBYFvIehYP_nOFJVCCAO8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/octavio/Downloads/00-2025-wifi_gratuito_en_cdmx.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWifiPoints",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYzMDQzOCwiZXhwIjoxNzYzNjM0MDM4fQ.pGfj-ECuFh7dmrL8EGuha-XBXMZmK4Ash6s0vTpy3F4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"query GetWifiPoints($limit: Int, $skip: Int) { getWifiPoints(limit: $limit, skip: $skip) { total data { id wifi_id program latitude longitude district } } }\",\n  \"variables\": {\n    \"limit\": 10,\n    \"skip\": 0\n  }\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWifiPointById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYzMDQzOCwiZXhwIjoxNzYzNjM0MDM4fQ.pGfj-ECuFh7dmrL8EGuha-XBXMZmK4Ash6s0vTpy3F4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"query GetWifiPointById($id: Int!) { getWifiPointById(id: $id) { id wifi_id program latitude longitude district } }\",\n  \"variables\": {\n    \"id\": 1\n  }\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWifiPointsByWifiId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYzMDQzOCwiZXhwIjoxNzYzNjM0MDM4fQ.pGfj-ECuFh7dmrL8EGuha-XBXMZmK4Ash6s0vTpy3F4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"query GetWifiPointsByWifiId($wifi_id: String!, $limit: Int, $skip: Int) { getWifiPointsByWifiId(wifi_id: $wifi_id, limit: $limit, skip: $skip) { total data { id wifi_id program latitude longitude district } } }\",\n  \"variables\": {\n    \"wifi_id\": \"Jefatura de Gobierno\",\n    \"limit\": 10,\n    \"skip\": 0\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWifiPointsByDistrict",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYzMDQzOCwiZXhwIjoxNzYzNjM0MDM4fQ.pGfj-ECuFh7dmrL8EGuha-XBXMZmK4Ash6s0vTpy3F4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"query GetWifiPointsByDistrict($district: String!, $limit: Int, $skip: Int) { getWifiPointsByDistrict(district: $district, limit: $limit, skip: $skip) { total data { id wifi_id program latitude longitude district } } }\",\n  \"variables\": {\n    \"district\": \"Benito Juarez\",\n    \"limit\": 10,\n    \"skip\": 0\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWifiPointsByProximity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc2MzYzMDQzOCwiZXhwIjoxNzYzNjM0MDM4fQ.pGfj-ECuFh7dmrL8EGuha-XBXMZmK4Ash6s0vTpy3F4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"query GetWifiPointsByProximity($lat: Float!, $lon: Float!, $limit: Int, $skip: Int) { getWifiPointsByProximity(lat: $lat, lon: $lon, limit: $limit, skip: $skip) { total data { id wifi_id program latitude longitude district } } }\",\n  \"variables\": {\n    \"lat\": 19.432608,\n    \"lon\": -99.133209,\n    \"limit\": 10,\n    \"skip\": 0\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"mutation { login(email: \\\"admin@cdmx.com\\\", password: \\\"admin123\\\") { token } }\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
