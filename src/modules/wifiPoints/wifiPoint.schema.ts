@@ -1,19 +1,23 @@
-import { gql } from "apollo-server-core";
+export const wifiPointTypeDefs = `
+type WifiPoint {
+  id: Int!
+  wifi_id: String
+  program: String
+  latitude: Float
+  longitude: Float
+  district: String
+}
 
-export const wifiPointTypeDefs = gql`
-    type WifiPoint {
-        id: Int!
-        wifi_id: String
-        colonia: String
-        alcaldia: String
-        latitud: Float
-        longitud: Float
-        tipo: String
-        estatus: String
-    }
+type WifiPointList {
+  total: Int!
+  data: [WifiPoint!]!
+}
 
-    type Query {
-        getWifiPoints(limit: Int, skip: Int): [WifiPoint!]!
-        getWifiPointById(id: Int!): WifiPoint
-    }
+type Query {
+  getWifiPoints(limit: Int, skip: Int): WifiPointList!
+  getWifiPointById(id: Int!): WifiPoint
+  getWifiPointsByDistrict(district: String!, limit: Int, skip: Int): WifiPointList!
+  getWifiPointsByProximity(lat: Float!, lon: Float!, limit: Int, skip: Int): WifiPointList!
+  getWifiPointsByWifiId(wifi_id: String!, limit: Int, skip: Int): WifiPointList!
+}
 `;

@@ -1,26 +1,15 @@
+import { wifiPointTypeDefs } from '../modules/wifiPoints/wifiPoint.schema';
+import { authTypeDefs } from '../modules/auth/auth.typeDefs';
 import { wifiPointResolvers } from '../modules/wifiPoints/wifiPoint.resolver';
+import { authResolvers } from '../modules/auth/auth.resolvers';
 
-export const typeDefs = [
-  `
-  type WifiPoint {
-    id: String!
-    wifi_id: String
-    program: String
-    latitude: Float
-    longitude: Float
-    district: String
-    createdAt: String
-  }
-
-  type Query {
-    getWifiPoints(limit: Int, skip: Int): [WifiPoint]
-    getWifiPointById(id: String!): WifiPoint
-  }
-  `
-];
+export const typeDefs = [wifiPointTypeDefs, authTypeDefs].join('\n');
 
 export const resolvers = {
   Query: {
-    ...wifiPointResolvers.Query
-  }
+    ...wifiPointResolvers.Query,
+  },
+  Mutation: {
+    ...authResolvers.Mutation,
+  },
 };
