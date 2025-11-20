@@ -1,8 +1,10 @@
 import { prisma } from "../../core/database/prisma";
 import { haversineDistance } from "../../core/utils/distance";
+import { WifiPoint } from "@prisma/client";
+type WifiPointWithDistance = WifiPoint & { distance: number };
 
 export class WifiPointService {
-  constructor(private prismaClient = prisma) {} // permite inyectar un mock en tests
+  constructor(private prismaClient = prisma) {}
 
   async findAll(limit = 100, skip = 0) {
     const total = await this.prismaClient.wifiPoint.count();
@@ -25,7 +27,9 @@ export class WifiPointService {
       skip,
       take: limit,
     });
-    const total = await this.prismaClient.wifiPoint.count({ where: { wifi_id } });
+    const total = await this.prismaClient.wifiPoint.count({
+      where: { wifi_id },
+    });
     return { total, data };
   }
 
@@ -33,22 +37,34 @@ export class WifiPointService {
     const total = await this.prismaClient.wifiPoint.count({
       where: { district },
     });
+
     const data = await this.prismaClient.wifiPoint.findMany({
       where: { district },
       skip,
       take: limit,
     });
+
     return { total, data };
   }
 
   async findByProximity(lat: number, lon: number, limit = 100, skip = 0) {
-    const points = await this.prismaClient.wifiPoint.findMany();
-    const withDistance = points.map(p => ({
+    const points: WifiPoint[] = await this.prismaClient.wifiPoint.findMany();
+
+    const withDistance: WifiPointWithDistance[] = points.map((p: WifiPoint) => ({
       ...p,
-      distance: p.latitude && p.longitude ? haversineDistance(lat, lon, p.latitude, p.longitude) : Infinity,
+      distance:
+        p.latitude && p.longitude
+          ? haversineDistance(lat, lon, p.latitude, p.longitude)
+          : Infinity,
     }));
-    const sorted = withDistance.sort((a, b) => (a.distance! - b.distance!));
+
+    const sorted = withDistance.sort(
+      (a: WifiPointWithDistance, b: WifiPointWithDistance) =>
+        a.distance - b.distance,
+    );
+
     const paginated = sorted.slice(skip, skip + limit);
+
     return { total: points.length, data: paginated };
   }
 }
